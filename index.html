@@ -1,0 +1,575 @@
+
+New chat
+Ctrl
+K
+My Kimi
+Plugins
+Scheduled
+Inspiration
+Slides
+
+More
+
+Projects
+
+New project
+
+Chats
+All chats
+GitHub Landing Page
+
+
+Invite to Earn
+Get Membership Benefits
+
+GitHub Landing Page
+make me a cool landing page for my github
+
+https://github.com/GoodDoggoDev
+Edit
+Copy
+Share
+
+Used 3 tools, Interactive GitHub Profile with Hover Tilt, Tech Stack Cloud, Dog Easter Egg
+Done! Here's your landing page 🐕
+
+index.html
+Preview file
+It's a single self-contained file — drop it in a repo as index.html, enable GitHub Pages, and you're live. What's inside:
+Hero
+Your GitHub avatar in a spinning gradient ring with floating orbit badges (Python 🐍, passkeys 🔑, good boi certified)
+Terminal-style typing effect cycling through doggo one-liners: whoami → good_doggo, woof && deploy --prod, git commit -m "treats", etc.
+Animations
+Floating paw prints drifting up the whole page
+Skill marquee: 🐾 GOOD BOI · PYTHON · PASSKEYS · WOOF.WOOF.WOOF...
+Scroll-reveal sections, animated stat counters, 3D tilt on the project card
+Sections
+About — stats row (1 repo, Python, unleashed since April 2026)
+Projects — a featured card for passkey-monitor with an "active" badge, plus a dashed "more bones buried in the yard" placeholder card that fills itself in as you add repos
+Stack — chips for Python, Passkeys/WebAuthn, Security, etc.
+Footer + "pet for a woof" button
+Best part: clicking your avatar (or the pet button) makes an actual bark sound via WebAudio and shoots a "WOOF! 🐾" burst across the screen. Fully responsive, dark kennel theme with amber/gold accents.
+If your bio or location is set later, I can pull those in too — just say the word.
+use font awesome icons make it look less ai more professional but still interactive
+Edit
+Copy
+Share
+
+Used 1 tool, Add Avatar Click Paw Burst with Sound and Dog Footer Icon
+Updated! Here's the refined version:
+
+index.html
+Preview file
+What changed:
+Font Awesome everywhere — every emoji is now a proper icon: paw logo in the nav, GitHub/arrow icons on buttons, folder/star/fork icons on the repo card, key/shield/python icons in the orbit badges and stack chips, and the marquee uses small paw separators.
+Professional tone — the copy got a serious haircut:
+Typer now cycles real positioning lines: python developer, building passkey-monitor, security tooling & automation, clean code, shipped often, open to collaboration
+Sections read like a portfolio, not a joke: "Focused builder, one repo at a time", "Tools I reach for"
+passkey-monitor gets a credible description (monitoring registration health, auth events, WebAuthn config drift)
+Footer is just your name and © 2026
+Still interactive:
+Typing effect, scroll reveals, animated counters, marquee
+3D tilt on the project card
+Clicking your avatar or the "pet for a woof" pill still fires a paw-particle burst + soft bark (now it's a subtle easter egg instead of the main event)
+Floating paws are dimmer and slower — texture, not noise
+The doggo identity survives through the paw motif and handle only, so it reads as a real developer's personal site with personality. Same deal as before — save as index.html, push to a repo, enable GitHub Pages.
+
+
+Instant
+High
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoodDoggoDev — Developer</title>
+<meta name="description" content="GoodDoggoDev — Python developer building security tooling. Creator of passkey-monitor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+  :root{
+    --bg:#0a0c10;
+    --bg2:#0e1118;
+    --panel:#12151e;
+    --panel2:#161a26;
+    --line:rgba(255,255,255,.07);
+    --text:#e9ecf2;
+    --muted:#98a1b3;
+    --accent:#f0a832;
+    --accent2:#e07830;
+    --green:#63c76a;
+    --radius:16px;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    overflow-x:hidden;line-height:1.6;
+  }
+  ::selection{background:var(--accent);color:#111}
+
+  /* background */
+  .bg-grid{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse 90% 70% at 50% 25%,#000 30%,transparent 78%);
+  }
+  .bg-glow{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(640px 420px at 14% 8%,rgba(240,168,50,.07),transparent 62%),
+      radial-gradient(600px 460px at 88% 30%,rgba(120,140,220,.06),transparent 62%);
+  }
+  #paws{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  #paws i{position:absolute;color:rgba(240,168,50,.10)}
+
+  /* nav */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 32px;
+    background:rgba(10,12,16,.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15.5px;letter-spacing:.2px;text-decoration:none;color:var(--text)}
+  .brand .logo{
+    width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#171006;font-size:15px;
+    box-shadow:0 0 16px rgba(240,168,50,.28);
+  }
+  .nav-links{display:flex;gap:4px;align-items:center}
+  .nav-links a{
+    color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:500;
+    padding:8px 14px;border-radius:9px;transition:all .2s;
+  }
+  .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+  .nav-cta{
+    background:rgba(240,168,50,.12);color:var(--accent)!important;border:1px solid rgba(240,168,50,.32);
+    display:inline-flex;align-items:center;gap:7px;margin-left:8px;font-weight:600;
+  }
+  .nav-cta:hover{background:rgba(240,168,50,.2)!important}
+  @media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
+
+  /* hero */
+  .hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:130px 32px 70px}
+  .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.2fr .85fr;gap:56px;align-items:center}
+  @media(max-width:880px){.hero-inner{grid-template-columns:1fr;text-align:center}.hero-copy .actions{justify-content:center}.hero-sub{margin-inline:auto}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--mono);font-size:12.5px;color:var(--muted);
+    border:1px solid var(--line);background:rgba(255,255,255,.03);
+    padding:7px 15px;border-radius:999px;margin-bottom:24px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 9px var(--green);animation:pulse 1.8s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  h1{font-size:clamp(38px,6vw,68px);line-height:1.05;font-weight:800;letter-spacing:-2px}
+  h1 .grad{background:linear-gradient(100deg,var(--accent) 15%,var(--accent2) 70%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .typer-line{margin-top:20px;font-family:var(--mono);font-size:clamp(14.5px,1.8vw,17.5px);color:var(--muted);min-height:1.6em}
+  .typer-line .prompt{color:var(--green)}
+  .cursor{display:inline-block;width:8px;height:1.1em;background:var(--accent);vertical-align:text-bottom;margin-left:4px;animation:blink 1s steps(1) infinite;border-radius:2px}
+  @keyframes blink{50%{opacity:0}}
+  .hero-sub{margin-top:18px;color:var(--muted);max-width:520px;font-size:16px}
+  .actions{display:flex;gap:13px;margin-top:34px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:14.5px;
+    padding:13px 24px;border-radius:12px;transition:all .22s;border:1px solid transparent;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#171006;
+    box-shadow:0 8px 26px rgba(224,140,60,.26);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(224,140,60,.38)}
+  .btn-ghost{color:var(--text);border-color:var(--line);background:rgba(255,255,255,.04)}
+  .btn-ghost:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
+
+  .hero-visual{position:relative;display:grid;place-items:center}
+  .avatar-wrap{position:relative;width:min(320px,70vw);aspect-ratio:1}
+  .avatar-ring{
+    position:absolute;inset:-12px;border-radius:50%;
+    background:conic-gradient(from 0deg,var(--accent),rgba(240,168,50,.12) 40%,rgba(120,140,220,.4) 65%,var(--accent));
+    animation:spin 10s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .avatar-ring::after{content:'';position:absolute;inset:5px;border-radius:50%;background:var(--bg)}
+  .avatar{
+    position:relative;width:100%;height:100%;border-radius:50%;object-fit:cover;
+    border:4px solid rgba(255,255,255,.1);cursor:pointer;transition:transform .3s;
+  }
+  .avatar:hover{transform:scale(1.02)}
+  .orbit{
+    position:absolute;display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted);
+    padding:8px 14px;border-radius:999px;background:var(--panel);border:1px solid var(--line);
+    box-shadow:0 6px 22px rgba(0,0,0,.5);white-space:nowrap;
+  }
+  .orbit i{font-size:12px;color:var(--accent)}
+  .o1{top:4%;left:-14%;animation:bob 4.4s ease-in-out infinite}
+  .o2{bottom:16%;right:-15%;animation:bob 4.4s ease-in-out .9s infinite}
+  .o3{bottom:-5%;left:6%;animation:bob 4.4s ease-in-out 1.8s infinite}
+  @keyframes bob{50%{transform:translateY(-11px)}}
+  @media(max-width:880px){.o1{left:-3%}.o2{right:-3%}}
+
+  /* marquee */
+  .marquee{position:relative;z-index:1;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.015);padding:15px 0}
+  .marquee-track{display:flex;gap:46px;width:max-content;animation:scroll 28s linear infinite;font-family:var(--mono);font-size:13.5px;color:var(--muted);white-space:nowrap}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+  .marquee-track span{display:inline-flex;align-items:center;gap:10px}
+  .marquee-track i{font-size:11px;color:var(--accent)}
+
+  /* sections */
+  section{position:relative;z-index:1;padding:96px 32px}
+  .wrap{max-width:1100px;margin:0 auto}
+  .sec-tag{font-family:var(--mono);font-size:12.5px;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase}
+  .sec-title{font-size:clamp(27px,3.8vw,40px);font-weight:800;letter-spacing:-1px;margin:10px 0 12px}
+  .sec-desc{color:var(--muted);max-width:620px;font-size:16px}
+  .sec-desc b{color:var(--text);font-weight:600}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+  @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 20px;transition:all .25s;position:relative;overflow:hidden;
+  }
+  .stat:hover{transform:translateY(-4px);border-color:rgba(240,168,50,.35)}
+  .stat .num{font-size:32px;font-weight:800;letter-spacing:-1px;color:var(--text)}
+  .stat .num small{font-size:16px;color:var(--accent);font-weight:700}
+  .stat .lbl{font-size:12px;color:var(--muted);font-family:var(--mono);margin-top:5px}
+
+  /* projects */
+  .projects{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;margin-top:44px}
+  @media(max-width:880px){.projects{grid-template-columns:1fr}}
+  .card{
+    background:linear-gradient(160deg,var(--panel),var(--panel2));
+    border:1px solid var(--line);border-radius:var(--radius);padding:30px;
+    position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s;
+    will-change:transform;
+  }
+  .card:hover{border-color:rgba(240,168,50,.4);box-shadow:0 20px 48px rgba(0,0,0,.42)}
+  .card::before{
+    content:'';position:absolute;top:-55%;right:-28%;width:270px;height:270px;border-radius:50%;
+    background:radial-gradient(circle,rgba(240,168,50,.11),transparent 70%);pointer-events:none;
+  }
+  .card .repo-name{font-family:var(--mono);font-size:18px;font-weight:600;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+  .card .repo-name a{color:var(--text);text-decoration:none}
+  .card .repo-name a:hover{color:var(--accent)}
+  .card .repo-name > i{color:var(--muted);font-size:15px}
+  .badge{font-family:var(--mono);font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;letter-spacing:.4px;display:inline-flex;align-items:center;gap:6px}
+  .b-python{background:rgba(53,114,165,.16);color:#79b8ff;border:1px solid rgba(121,184,255,.28)}
+  .b-live{background:rgba(99,199,106,.1);color:var(--green);border:1px solid rgba(99,199,106,.28)}
+  .b-soon{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--line)}
+  .card p.desc{color:var(--muted);margin-top:14px;font-size:15px}
+  .card .meta{display:flex;gap:18px;margin-top:20px;font-family:var(--mono);font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+  .card .meta span{display:inline-flex;align-items:center;gap:7px}
+  .card .meta i{font-size:11px}
+  .card .go{display:inline-flex;align-items:center;gap:8px;margin-top:24px;color:var(--accent);text-decoration:none;font-weight:600;font-size:14px;transition:gap .2s}
+  .card .go:hover{gap:12px}
+  .soon-card{display:grid;place-items:center;text-align:center;border-style:dashed}
+  .soon-card .big{font-size:44px;color:var(--accent);opacity:.85;animation:bob 3.6s ease-in-out infinite}
+
+  /* stack */
+  .stack{display:flex;flex-wrap:wrap;gap:11px;margin-top:40px}
+  .chip{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--mono);font-size:13px;padding:10px 17px;border-radius:11px;
+    background:var(--panel);border:1px solid var(--line);color:var(--muted);transition:all .2s;cursor:default;
+  }
+  .chip i{font-size:13px;color:var(--accent)}
+  .chip:hover{color:var(--text);border-color:rgba(240,168,50,.45);transform:translateY(-3px)}
+
+  /* footer */
+  footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:44px 32px 90px;text-align:center;color:var(--muted);font-size:13.5px}
+  footer .pawline{display:flex;justify-content:center;gap:22px;margin-bottom:16px;color:rgba(240,168,50,.35);font-size:13px}
+  footer a{color:var(--accent);text-decoration:none;font-weight:500}
+  footer a:hover{text-decoration:underline}
+
+  /* paw burst */
+  .burst{position:fixed;z-index:99;pointer-events:none;color:var(--accent);animation:burstfly .95s ease-out forwards}
+  @keyframes burstfly{
+    0%{opacity:0;transform:translate(0,0) scale(.5) rotate(0deg)}
+    18%{opacity:1}
+    100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.15) rotate(var(--rr))}
+  }
+
+  /* bark pill */
+  .bark{
+    position:fixed;bottom:24px;right:24px;z-index:60;
+    display:flex;align-items:center;gap:10px;
+    background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    padding:10px 18px 10px 11px;cursor:pointer;font-family:var(--mono);font-size:12.5px;color:var(--muted);
+    box-shadow:0 10px 28px rgba(0,0,0,.5);transition:all .25s;user-select:none;
+  }
+  .bark:hover{transform:translateY(-3px);border-color:rgba(240,168,50,.45);color:var(--text)}
+  .bark .face{
+    width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:13px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#171006;
+  }
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div id="paws"></div>
+
+<nav>
+  <a class="brand" href="#top">
+    <span class="logo"><i class="fa-solid fa-paw"></i></span>
+    GoodDoggoDev
+  </a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#stack">Stack</a>
+    <a class="nav-cta" href="https://github.com/GoodDoggoDev" target="_blank" rel="noopener">
+      <i class="fa-brands fa-github"></i> GitHub
+    </a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span>Available for collaboration</span>
+      <h1>GoodDoggo<span class="grad">Dev</span></h1>
+      <div class="typer-line"><span class="prompt">~$</span> <span id="typer"></span><span class="cursor"></span></div>
+      <p class="hero-sub">
+        Python developer focused on security tooling. I build small, reliable utilities —
+        currently working on <b style="color:var(--text)">passkey-monitor</b>, a passkey
+        monitoring tool. Clean code, honest commits, shipped early and often.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/GoodDoggoDev?tab=repositories" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> View repositories
+        </a>
+        <a class="btn btn-ghost" href="#projects">
+          See my work <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="avatar-wrap">
+        <div class="avatar-ring"></div>
+        <img class="avatar" id="avatar" src="https://avatars.githubusercontent.com/u/278237583?v=4" alt="GoodDoggoDev avatar"
+             onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23f0a832%22/%3E%3Ctext x=%2250%22 y=%2266%22 font-size=%2242%22 text-anchor=%22middle%22 fill=%22%23171006%22%3E%26%23x1F43E%3B%3C/text%3E%3C/svg%3E'">
+        <span class="orbit o1"><i class="fa-brands fa-python"></i> Python</span>
+        <span class="orbit o2"><i class="fa-solid fa-key"></i> Passkeys</span>
+        <span class="orbit o3"><i class="fa-solid fa-shield-halved"></i> Security</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee"></div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="sec-tag">// about</span>
+      <h2 class="sec-title">Focused builder, one repo at a time</h2>
+      <p class="sec-desc">
+        I'm <b>GoodDoggoLuna</b> — the developer behind <b>GoodDoggoDev</b>. New account,
+        high standards: I'd rather ship one well-tested tool than ten half-finished ones.
+        Currently going deep on passkey security and authentication.
+      </p>
+    </div>
+    <div class="stats">
+      <div class="stat reveal"><div class="num" data-count="1">0</div><div class="lbl">public repository</div></div>
+      <div class="stat reveal"><div class="num" data-count="1">0</div><div class="lbl">primary language · Python</div></div>
+      <div class="stat reveal"><div class="num" data-count="100" data-suffix="%">0</div><div class="lbl">commitment to clean code</div></div>
+      <div class="stat reveal"><div class="num" data-count="2026">0</div><div class="lbl">building since April</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="background:rgba(255,255,255,.014);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="sec-tag">// projects</span>
+      <h2 class="sec-title">Selected work</h2>
+      <p class="sec-desc">Active repositories — more in development.</p>
+    </div>
+    <div class="projects">
+      <article class="card reveal">
+        <div class="repo-name">
+          <i class="fa-regular fa-folder-open"></i>
+          <a href="https://github.com/GoodDoggoDev/passkey-monitor" target="_blank" rel="noopener">passkey-monitor</a>
+          <span class="badge b-python"><i class="fa-brands fa-python"></i> Python</span>
+          <span class="badge b-live"><i class="fa-solid fa-circle" style="font-size:7px"></i> Active</span>
+        </div>
+        <p class="desc">
+          A monitoring tool for passkey infrastructure — tracking registration health,
+          authentication events, and drift in WebAuthn configurations so credential
+          issues get caught before users do.
+        </p>
+        <div class="meta">
+          <span><i class="fa-regular fa-star"></i> 0 stars</span>
+          <span><i class="fa-solid fa-code-fork"></i> 0 forks</span>
+          <span><i class="fa-regular fa-clock"></i> updated recently</span>
+        </div>
+        <a class="go" href="https://github.com/GoodDoggoDev/passkey-monitor" target="_blank" rel="noopener">
+          Open repository <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </article>
+      <article class="card soon-card reveal">
+        <div>
+          <div class="big"><i class="fa-solid fa-box-open"></i></div>
+          <p style="font-weight:600;margin-top:12px">More on the way</p>
+          <p style="color:var(--muted);font-size:14px;margin-top:6px">Follow on GitHub to catch the next release.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="sec-tag">// stack</span>
+      <h2 class="sec-title">Tools I reach for</h2>
+    </div>
+    <div class="stack reveal">
+      <span class="chip"><i class="fa-brands fa-python"></i> Python</span>
+      <span class="chip"><i class="fa-solid fa-key"></i> WebAuthn / Passkeys</span>
+      <span class="chip"><i class="fa-solid fa-shield-halved"></i> Security</span>
+      <span class="chip"><i class="fa-solid fa-flask"></i> Testing</span>
+      <span class="chip"><i class="fa-solid fa-plug"></i> REST APIs</span>
+      <span class="chip"><i class="fa-solid fa-code-branch"></i> Git</span>
+      <span class="chip"><i class="fa-brands fa-linux"></i> Linux</span>
+      <span class="chip"><i class="fa-brands fa-docker"></i> Docker</span>
+      <span class="chip"><i class="fa-solid fa-cloud"></i> Cloud</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="pawline">
+    <i class="fa-solid fa-paw"></i><i class="fa-solid fa-paw"></i><i class="fa-solid fa-paw"></i><i class="fa-solid fa-paw"></i><i class="fa-solid fa-paw"></i>
+  </div>
+  <p>Designed &amp; built by <a href="https://github.com/GoodDoggoDev" target="_blank" rel="noopener">GoodDoggoDev</a> · <span style="font-family:var(--mono)">© 2026</span></p>
+</footer>
+
+<div class="bark" id="barkBtn" title="pet the dog">
+  <span class="face"><i class="fa-solid fa-dog"></i></span> pet for a woof
+</div>
+
+<script>
+/* typing effect */
+const phrases = [
+  'python developer',
+  'building passkey-monitor',
+  'security tooling & automation',
+  'clean code, shipped often',
+  'open to collaboration'
+];
+const typer = document.getElementById('typer');
+let pi = 0, ci = 0, deleting = false;
+(function type(){
+  const p = phrases[pi];
+  typer.textContent = p.slice(0, ci);
+  let delay = deleting ? 30 : 62;
+  if(!deleting && ci === p.length){ delay = 1900; deleting = true; }
+  else if(deleting && ci === 0){ deleting = false; pi = (pi+1) % phrases.length; delay = 400; }
+  ci += deleting ? -1 : 1;
+  setTimeout(type, delay);
+})();
+
+/* marquee */
+const items = ['PYTHON','PASSKEYS','SECURITY','AUTOMATION','CLEAN CODE','OPEN SOURCE','RELIABILITY'];
+const track = document.getElementById('marquee');
+track.innerHTML = [...items, ...items].map(t => `<span><i class="fa-solid fa-paw"></i>${t}</span>`).join('');
+
+/* floating paws */
+const pawLayer = document.getElementById('paws');
+for(let i=0;i<14;i++){
+  const p = document.createElement('i');
+  p.className = 'fa-solid fa-paw';
+  const size = 12 + Math.random()*14;
+  p.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;font-size:${size}px;
+    opacity:${.3+Math.random()*.5};animation:drift ${16+Math.random()*16}s linear infinite;
+    animation-delay:-${Math.random()*18}s;`;
+  pawLayer.appendChild(p);
+}
+const st = document.createElement('style');
+st.textContent = '@keyframes drift{0%{transform:translateY(15vh) rotate(0deg)}100%{transform:translateY(-120vh) rotate(320deg)}}';
+document.head.appendChild(st);
+
+/* scroll reveal */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+}), {threshold:.15});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* counters */
+const cio = new IntersectionObserver(es => es.forEach(e => {
+  if(!e.isIntersecting) return;
+  const el = e.target, target = +el.dataset.count, suffix = el.dataset.suffix || '';
+  const dur = 1200, t0 = performance.now();
+  (function tick(t){
+    const k = Math.min(1,(t-t0)/dur);
+    el.innerHTML = Math.round(target * (1-Math.pow(1-k,3))) + (suffix ? `<small>${suffix}</small>` : '');
+    if(k<1) requestAnimationFrame(tick);
+  })(t0);
+  cio.unobserve(el);
+}), {threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+/* paw burst + soft bark */
+let actx;
+function bark(){
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(380, actx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(110, actx.currentTime+.13);
+    g.gain.setValueAtTime(.07, actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, actx.currentTime+.15);
+    o.connect(g); g.connect(actx.destination);
+    o.start(); o.stop(actx.currentTime+.16);
+  }catch(e){}
+}
+function burst(x, y){
+  bark();
+  for(let i=0;i<7;i++){
+    const b = document.createElement('i');
+    b.className = 'fa-solid fa-paw burst';
+    const ang = Math.random()*Math.PI*2, dist = 50 + Math.random()*70;
+    b.style.cssText = `left:${x-8}px;top:${y-8}px;font-size:${11+Math.random()*10}px;
+      --dx:${Math.cos(ang)*dist}px;--dy:${Math.sin(ang)*dist - 40}px;--rr:${Math.random()*60-30}deg;`;
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 980);
+  }
+}
+document.getElementById('avatar').addEventListener('click', e => burst(e.clientX, e.clientY));
+document.getElementById('barkBtn').addEventListener('click', e => burst(e.clientX, e.clientY));
+
+/* tilt on project card */
+document.querySelectorAll('.card:not(.soon-card)').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const rx = ((e.clientY - r.top)/r.height - .5) * -5;
+    const ry = ((e.clientX - r.left)/r.width - .5) * 5;
+    card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => card.style.transform = '');
+});
+</script>
+</body>
+</html>
